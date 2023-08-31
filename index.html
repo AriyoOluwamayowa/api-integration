@@ -1,0 +1,85 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trivia API Example</title>
+  </head>
+  <body>
+    <div class="category-buttons">
+      <button class="category-button general">General</button>
+      <button class="category-button travel">Travel</button>
+      <button class="category-button sport">Sport</button>
+      <button class="category-button history">History</button>
+    </div>
+    <div class="content">
+      <div class="question-container">
+        <p class="question"></p>
+        <ul class="choices"></ul>
+      </div>
+      <button class="next-button">Next</button>
+      <h2 class="content-heading"></h2>
+    </div>
+
+    <script>
+      const API_BASE_URL = "https://opentdb.com/api.php";
+      const categoryButtons = document.querySelectorAll(".category-button");
+      const questionContainer = document.querySelector(".question-container");
+      const questionElement = questionContainer.querySelector(".question");
+      const choicesList = questionContainer.querySelector(".choices");
+      const contentHeading = document.querySelector(".content-heading");
+
+      categoryButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          const category = button.classList[1]; // Extract category from class name
+          contentHeading.textContent = category;
+
+          // Fetch trivia data for the selected category
+          const triviaData = await fetchTriviaData(category);
+
+          // Update question and choices
+          const question = triviaData.results[0].question;
+          const choices = triviaData.results[0].incorrect_answers.concat(
+            triviaData.results[0].correct_answer
+          );
+
+          questionElement.textContent = question;
+          choicesList.innerHTML = "";
+          choices.forEach((choice) => {
+            const choiceItem = document.createElement("li");
+            choiceItem.textContent = choice;
+            choicesList.appendChild(choiceItem);
+          });
+        });
+      });
+
+      // async function fetchTriviaData(category) {
+      //   const response = await fetch(
+      //     `${"https://opentdb.com/api.php"}?amount=1&category=${category}`
+      //   );
+      //   const data = await response.json();
+      //   return data;
+      // }
+
+      async function fetchTriviaData(categories) {
+        const apiUrl = "YOUR_API_URL"; // Replace with your actual API URL
+        const dataPromises = categories.map(async (category) => {
+          const response = await fetch(`${apiUrl}?category=${category}`);
+          return response.json();
+        });
+
+        const results = await Promise.all(dataPromises);
+        return results;
+      }
+
+      const categories = ["category1", "category2", "category3", "category4"];
+      fetchTriviaData(categories)
+        .then((data) => {
+          console.log(data); // You can handle the fetched data here
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    </script>
+  </body>
+</html> -->
